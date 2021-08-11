@@ -142,12 +142,6 @@ MYSQL_USERNAME = os.getenv('MYSQL_USER')
 MYSQL_PASSWORD = os.getenv('MYSQL_PASSWORD')
 MYSQL_PORT = 3306
 
-print('MYSQL_PASSWORD', os.getenv('MYSQL_PASSWORD'))
-# MYSQL_HOST = '127.0.0.1'
-# MYSQL_USERNAME = 'pradeep'
-# MYSQL_PASSWORD = 'pradeep'
-# MYSQL_PORT = 3306
-
 log_dir = "/var/log/snappyflow"
 if not os.path.exists(log_dir):
     os.makedirs(log_dir)
