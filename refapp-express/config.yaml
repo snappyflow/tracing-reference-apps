@@ -1,0 +1,16 @@
+key: <PROFILE_KEY>
+tags:
+  Name: <PROJECT_NAME>
+  appName: <APP_NAME>
+  projectName: <PROJECT_NAME>
+logging:
+  plugins:
+    - name: elasticApmTraceLog
+      enabled: true
+      config:
+        log_level:
+          - error
+          - warning
+          - info
+        log_path: /var/log/trace/django.log, /var/log/trace/jtrace.log 
+es_index_without_suffix: false

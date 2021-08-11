@@ -1,0 +1,7 @@
+Flask==2.0.1
+elasticsearch6==6.8.1
+requests==2.25.1
+mysql-connector-python
+elastic-apm
+elastic-apm[flask]
+sf-apm-lib==0.1.0

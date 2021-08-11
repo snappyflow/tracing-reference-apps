@@ -1,0 +1,38 @@
+{
+  "name": "refapp-node-sail",
+  "private": true,
+  "version": "0.0.0",
+  "description": "a Sails application",
+  "keywords": [],
+  "dependencies": {
+    "@elastic/elasticsearch": "^7.13.0",
+    "@sailshq/lodash": "^3.10.3",
+    "dotenv": "^10.0.0",
+    "elastic-apm-node": "^3.19.0",
+    "moment": "^2.29.1",
+    "mysql": "^2.18.1",
+    "sails": "^1.4.4",
+    "sails-hook-orm": "^3.0.2",
+    "sails-hook-sockets": "^2.0.0",
+    "sf-apm-lib": "^1.0.0"
+  },
+  "devDependencies": {
+    "eslint": "5.16.0"
+  },
+  "scripts": {
+    "start": "NODE_ENV=production node app.js",
+    "test": "npm run lint && npm run custom-tests && echo 'Done.'",
+    "lint": "./node_modules/eslint/bin/eslint.js . --max-warnings=0 --report-unused-disable-directives && echo '✔  Your .js files look good.'",
+    "custom-tests": "echo \"(No other custom tests yet.)\" && echo"
+  },
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/pradeep/refapp-node-sail.git"
+  },
+  "author": "pradeep",
+  "license": "",
+  "engines": {
+    "node": "^14.17"
+  }
+}
