@@ -2,6 +2,8 @@ SnappyFlow trace in Apache Thrift in Python
 ----------------------------------------
 Prerequisite:
 --------------
+pip install thrift
+
 pip install elastic-apm
 
 pip install sf-apm-lib
