@@ -20,19 +20,17 @@ gen-py (folder) -> Example(folder) -> Example.py(file).
 
 4)If multiple service is used, each service file should be modified as below.
 
-5)Note: - Lines in bold alone need to be added.
-
-6)Add the following import.
+5)Add the following import.
 from Trace import create_trace, start_trace, end_trace
 
-7)Next add the create_trace() function in Processor Class init method as below.
+6)Next add the create_trace() function in Processor Class init method as below.
 
 class Processor(Iface, TProcessor):
 
     def __init__(self, handler):
         self.client = create_trace()
 
-8)start_trace() and end_trace() function should be added to process() function in same Processor class.
+7)start_trace() and end_trace() function should be added to process() function in same Processor class.
 
 def process(self, iprot, oprot):
 
@@ -55,5 +53,6 @@ def process(self, iprot, oprot):
         end_trace(self.client, name)
         return True
 
-9)If server and client are in remote locations, these code changes need to be added to Server side gen-py file.
-10)Each function call from client to server will be recorded as transaction and inter call from function ElasticApm instrument supported packages will be taken spans.
+8)If server and client are in remote locations, these code changes need to be added to Server side gen-py file.
+
+9)Each function call from client to server will be recorded as transaction and inter call from function ElasticApm instrument supported packages will be taken spans.
