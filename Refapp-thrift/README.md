@@ -12,7 +12,7 @@ pip install requests
 
 Steps to make thrift trace: -
 -----------------------------
-1)After adding appropriate data to above Trace.py file, place it inside
+1)After adding appropriate data to above Trace.py file, placed inside
 gen-py (thrift code generated folder using .thrift file).
 
 2)Following code changes need to be done inside service File in gen-py.
