@@ -4,5 +4,6 @@ django-rest-swagger==2.2.0
 elasticsearch6==6.8.1
 requests==2.25.1
 mysql-connector-python
-# elastic-apm
-sf-elastic-apm==6.3.3
+elastic-apm==6.3.3
+# sf-elastic-apm==6.3.3
+sf-apm-lib==0.1.1

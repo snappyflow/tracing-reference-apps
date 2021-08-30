@@ -14,7 +14,7 @@ from pathlib import Path
 import os
 import json
 from elasticapm.handlers.logging import Formatter
-from sf_apm_lib import snappyflow as sf
+from sf_apm_lib.snappyflow import Snappyflow
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
@@ -217,11 +217,14 @@ try:
     app_name = os.getenv('APP_NAME')
     profile_key = os.getenv('SF_PROFILE_KEY')
 
-    SFTRACE_CONFIG = sf.get_trace_config(profile_key, project_name, app_name)
+    sf = Snappyflow()
+    sf.init(profile_key, project_name, app_name)
+
+    SFTRACE_CONFIG = sf.get_trace_config()
 
     ELASTIC_APM={
         'SERVICE_NAME': "refapp-django",
-        'SERVER_URL': SFTRACE_CONFIG.get('SFTRACE_SERVER_URL'),
+        'SERVER_URL': 'http://52.33.147.154:8200',
         'GLOBAL_LABELS': SFTRACE_CONFIG.get('SFTRACE_GLOBAL_LABELS'),
         'VERIFY_SERVER_CERT': SFTRACE_CONFIG.get('SFTRACE_VERIFY_SERVER_CERT'),
         'SPAN_FRAMES_MIN_DURATION': SFTRACE_CONFIG.get('SFTRACE_SPAN_FRAMES_MIN_DURATION'),

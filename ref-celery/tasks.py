@@ -1,7 +1,7 @@
 from celery import Celery
 
 # <SFTRACE-CONFIG> add the below agent specific configuration
-from sf_apm_lib import snappyflow as sf
+from sf_apm_lib.snappyflow import Snappyflow
 from elasticapm import Client, instrument
 from elasticapm.contrib.celery import register_exception_tracking, register_instrumentation
 import os
@@ -16,14 +16,20 @@ logger.setLevel('INFO')
 instrument()
 
 try:
-    project_name = '' # Replace with appropriate snappyflow project name
-    app_name = '' # Replace with appropriate snappyflow app name
-    profile_key = '' # Replace Snappyflow Profile key
+    # project_name = '' # Replace with appropriate snappyflow project name
+    # app_name = '' # Replace with appropriate snappyflow app name
+    # profile_key = '' # Replace Snappyflow Profile key
 
-    SFTRACE_CONFIG = sf.get_trace_config(profile_key, project_name, app_name)
+    project_name = os.getenv('PROJECT_NAME')
+    app_name = os.getenv('APP_NAME')
+    profile_key = os.getenv('SF_PROFILE_KEY')
+    sf = Snappyflow()
+    sf.init(profile_key, project_name, app_name)
 
+    SFTRACE_CONFIG = sf.get_trace_config()
+    #     'SERVER_URL': 'http://52.33.147.154:8200',
     apm_client = Client(service_name= 'python-celery', # Replace service name for tracing
-                        server_url= SFTRACE_CONFIG.get('SFTRACE_SERVER_URL'),
+                        server_url=  SFTRACE_CONFIG.get('SFTRACE_SERVER_URL'),
                         global_labels= SFTRACE_CONFIG.get('SFTRACE_GLOBAL_LABELS'),
                         verify_server_cert= SFTRACE_CONFIG.get('SFTRACE_VERIFY_SERVER_CERT'))
     register_exception_tracking(apm_client)

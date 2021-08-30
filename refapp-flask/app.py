@@ -3,10 +3,9 @@ from flask import Flask
 import mysql.connector
 from elasticsearch6 import Elasticsearch
 from elasticapm.contrib.flask import ElasticAPM
-from sf_apm_lib import snappyflow as sf
 import logging 
 from elasticapm.handlers.logging import Formatter
-
+from sf_apm_lib.snappyflow import Snappyflow
 
 fh = logging.FileHandler('/var/log/trace/flask.log') 
 
@@ -25,7 +24,10 @@ project_name = os.getenv('PROJECT_NAME')
 app_name = os.getenv('APP_NAME')
 profile_key = os.getenv('SF_PROFILE_KEY')
 
-SFTRACE_CONFIG = sf.get_trace_config(profile_key, project_name, app_name)
+sf = Snappyflow()
+sf.init(profile_key, project_name, app_name)
+
+SFTRACE_CONFIG = sf.get_trace_config()
 
 app.config['ELASTIC_APM'] = {
     'SERVICE_NAME': 'refapp-flask',
