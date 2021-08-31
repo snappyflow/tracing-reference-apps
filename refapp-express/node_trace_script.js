@@ -1,17 +1,17 @@
-const sf = require('sf-apm-lib');
+const Snappyflow = require('sf-apm-lib');
 const mysql = require('mysql');
 
 let projectName = process.env.PROJECT_NAME;
 let appName = process.env.APP_NAME;
 let profileKey = process.env.SF_PROFILE_KEY;
-var sfObj = new sf.Snappyflow();
-sfObj.init(profileKey, projectName, appName);
+var sfObj = new Snappyflow();
+sfObj.init(profileKey, projectName, appName); // Manual override
 var apm;
 try {
     
     let sfTraceConfig = sfObj.getTraceConfig();
     apm = require('elastic-apm-node').start({
-      serviceName: 'refapp-node-lambda',
+      serviceName: 'refapp-node-script',
       serverUrl: sfTraceConfig['SFTRACE_SERVER_URL'],
       globalLabels: sfTraceConfig['SFTRACE_GLOBAL_LABELS'],
       verifyServerCert: sfTraceConfig['SFTRACE_VERIFY_SERVER_CERT'] === undefined ? false : sfTraceConfig['SFTRACE_VERIFY_SERVER_CERT'],

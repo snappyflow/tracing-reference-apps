@@ -1,14 +1,14 @@
 if (process.env.NODE_ENV == 'development') 
     require('dotenv').config();
 
-const sf = require('sf-apm-lib');
+const Snappyflow = require('sf-apm-lib');
 
 let projectName = process.env.PROJECT_NAME;
 let appName = process.env.APP_NAME;
 let profileKey = process.env.SF_PROFILE_KEY;
 
-var sfObj = new sf.Snappyflow();
-sfObj.init(profileKey, projectName, appName);
+var sfObj = new Snappyflow();
+sfObj.init(profileKey, projectName, appName); // Manual override
 let sfTraceConfig = sfObj.getTraceConfig();
 var apm;
 try {
@@ -22,7 +22,9 @@ try {
         verifyServerCert: sfTraceConfig['SFTRACE_VERIFY_SERVER_CERT'] === undefined ? false : sfTraceConfig['SFTRACE_VERIFY_SERVER_CERT'],
         active: sfTraceConfig['SFTRACE_SERVER_URL'] === undefined ? false : true,
         stackTraceLimit: sfTraceConfig['SFTRACE_STACK_TRACE_LIMIT'],
-        captureSpanStackTraces: sfTraceConfig['SFTRACE_CAPTURE_SPAN_STACK_TRACES']
+        captureSpanStackTraces: sfTraceConfig['SFTRACE_CAPTURE_SPAN_STACK_TRACES'],
+        logLevel: 'debug',
+        payloadLogFile: 'elasticapmagent.log'
     })
 } catch (e) {
     console.log(e);

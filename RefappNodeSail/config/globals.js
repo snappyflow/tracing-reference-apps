@@ -9,13 +9,17 @@
  * https://sailsjs.com/config/globals
  * 
  */
+if (process.env.NODE_ENV == 'development') 
+  require('dotenv').config();
+
 let logger = require("./logger").Logger;
 
-let projectName = 'sftrace';
-let appName = 'reference-apps';
-let profileKey = 'ExQdG2PEDE8o3XOJ8RPnYU0jfvLDitaIO+rNQ54w0ESpUSwMU2NmLGPS3y4YsmLyhe55+NadzipnZxzqVEiJODOqnj3seRJPMZ0UZ0/33qA7Tah/4Fv2Zzoap+R8cnNDPs2r6MfWpXTKc792UzwF8wpLAsJvdH69Re2VYko8z5sLDd9k4GuZoDYrxMNh/netQKnJsWeACm4Slz4VkIYgKpN9lyAgud6I6BECQUYOu6yfKjRUFhIFIU/NlYivO49oWgtFtv4fye3ovmvDmaxdTcI0CD1C3m8VbAvTf+JVoJHWHlqmpgNWfA2x+amIB8raULzeHFu2ztJGHcIPdp5L6F0snOKrCVplS/UEPiqRPc+cS2PwO5TYYR4WuOeksze8TQr+NvlVN5eW2mqSMSDQhg==';
-const sf = require('sf-apm-lib');
-var sfObj = new sf.Snappyflow();
+let projectName = process.env.PROJECT_NAME;
+let appName = process.env.APP_NAME;
+let profileKey = process.env.SF_PROFILE_KEY;
+
+const Snappyflow = require('sf-apm-lib');
+var sfObj = new Snappyflow();
 sfObj.init(profileKey, projectName, appName);
 let sfTraceConfig = sfObj.getTraceConfig();
 
