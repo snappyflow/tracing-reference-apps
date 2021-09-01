@@ -1,7 +1,7 @@
 import os
 from flask import Flask
 import mysql.connector
-from elasticsearch6 import Elasticsearch
+from elasticsearch.client import Elasticsearch
 from elasticapm.contrib.flask import ElasticAPM
 import logging 
 from elasticapm.handlers.logging import Formatter

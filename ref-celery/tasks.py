@@ -29,7 +29,7 @@ try:
     SFTRACE_CONFIG = sf.get_trace_config()
     #     'SERVER_URL': 'http://52.33.147.154:8200',
     apm_client = Client(service_name= 'python-celery', # Replace service name for tracing
-                        server_url=  SFTRACE_CONFIG.get('SFTRACE_SERVER_URL'),
+                        server_url= SFTRACE_CONFIG.get('SFTRACE_SERVER_URL'),
                         global_labels= SFTRACE_CONFIG.get('SFTRACE_GLOBAL_LABELS'),
                         verify_server_cert= SFTRACE_CONFIG.get('SFTRACE_VERIFY_SERVER_CERT'))
     register_exception_tracking(apm_client)

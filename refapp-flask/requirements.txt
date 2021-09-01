@@ -1,9 +1,9 @@
 Flask==2.0.1
-elasticsearch6==6.8.1
+elasticsearch==6.8.2
 requests==2.25.1
 mysql-connector-python
-elastic-apm==6.3.3
-# sf-elastic-apm==6.3.3
-# sf-elastic-apm[flask]
-elastic-apm[flask]
+# elastic-apm==6.3.3
+sf-elastic-apm==6.3.4
+sf-elastic-apm[flask]==6.3.4
+# elastic-apm[flask]
 sf-apm-lib==0.1.1

@@ -1,12 +1,12 @@
 from rest_framework.views import APIView, status
 from django.http import JsonResponse
 import requests
-from elasticsearch6 import Elasticsearch
 from django.conf import settings
 import logging
 import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 # from sftrace.handlers import get_logger
+from elasticsearch.client import Elasticsearch
 
 log = logging.getLogger('application')
 es_log = logging.getLogger('elasticapm')
@@ -45,7 +45,7 @@ class ElasticView(APIView):
 
         if not err:
             try:
-                self.es.search(index='abcd')
+                self.es.search(index='abcd', body={"query": {"match_all": {}}})
             except Exception as ex:
                 es_log.error('error %s', ex, exc_info=True)
             result['health'] = self.es.cluster.health()

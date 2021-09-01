@@ -1,9 +1,9 @@
 django==3.1
 djangorestframework==3.12.2
 django-rest-swagger==2.2.0
-elasticsearch6==6.8.1
+elasticsearch==6.8.2
 requests==2.25.1
 mysql-connector-python
-elastic-apm==6.3.3
-# sf-elastic-apm==6.3.3
+# elastic-apm==6.3.3
+sf-elastic-apm==6.3.4
 sf-apm-lib==0.1.1
