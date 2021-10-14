@@ -1,0 +1,5 @@
+Django==3.2.8
+djangorestframework==3.12.4
+requests==2.26.0
+sf-apm-lib==0.1.2
+sf-elastic-apm==6.3.4
