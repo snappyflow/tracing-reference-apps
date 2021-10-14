@@ -3,10 +3,10 @@ Load Test API
 
 Run both project seperately in given ports below
 
-Activate env enviroment using below command:-
-----------------------------------------------
+Install pip packages using below command:-
+------------------------------------------
 
-source env/bin/activate
+pip install -r requirement.txt
 
 trickle_api Project command:-
 ------------------------------
@@ -17,11 +17,6 @@ trickle_api_2 Project command:-
 --------------------------------
 
 python manage.py runserver 0:8080
-
-Deactivate env enviroment using below command:-
-------------------------------------------------
-
-source env/bin/activate
 
 Install hey using below command:-
 ----------------------------------
