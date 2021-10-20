@@ -38,6 +38,10 @@ class ElasticView(APIView):
             err = ex
         return err
 
+
+    def post(self, request):
+        return JsonResponse({'msg': 'OK'} , status=status.HTTP_200_OK, safe=False)
+
     def get(self, request):
         es_log.info('Elastic api get call')
         err = self.connect()

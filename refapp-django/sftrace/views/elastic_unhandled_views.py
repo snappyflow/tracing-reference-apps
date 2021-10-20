@@ -1,7 +1,7 @@
 from rest_framework.views import APIView, status
 from django.http import JsonResponse
 import requests
-from elasticsearch6 import Elasticsearch
+from elasticsearch.client import Elasticsearch
 from django.conf import settings
 import logging
 import urllib3

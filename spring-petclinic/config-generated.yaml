@@ -1,0 +1,57 @@
+key: CHANGEME
+tags:
+  Name: CHANGEME
+  appName: CHANGEME
+  projectName: CHANGEME
+metrics:
+  plugins:
+    - name: jvm
+      enabled: true
+      interval: 60
+      config:
+        deadLockMonitoringInterval: 300
+        heapInterval: 3600
+        monitorDeadlocks: true
+        process: '*'
+    - name: mysql
+      enabled: true
+      interval: 60
+      config:
+        documentsTypes:
+          - databaseDetails
+          - serverDetails
+          - tableDetails
+        host: 127.0.0.1
+        password: maplelabs
+        port: 3306
+        user: root
+    - name: linux
+      enabled: true
+      interval: 30
+logging:
+  plugins:
+    - name: mysql-error
+      enabled: true
+      config:
+        log_level:
+          - error
+          - warning
+          - note
+        log_path: /var/log/mysql/error.log, /var/log/mysql/mysql-error.log, /var/log/mysqld.err
+    - name: mysql-general
+      enabled: true
+      config:
+        log_path: /var/log/mysql/mysql.log, /var/log/mysql.log, /var/log/mysqld.log, /var/lib/mysql/ip-*.log
+    - name: mysql-slowquery
+      enabled: true
+      config:
+        log_path: /var/lib/mysql/ip-*slow.log
+    - name: linux-syslog
+      enabled: true
+      config:
+        log_level:
+          - error
+          - warning
+          - info
+        log_path: /var/log/syslog,/var/log/auth.log,/var/log/messages,/var/log/secure
+es_index_without_suffix: false

@@ -1,0 +1,1 @@
+java -javaagent:/opt/sfagent/sftrace/java/sftrace-java-agent.jar -Dsftrace.service_name=spring-service -Delastic.apm.use_path_as_transaction_name=true -Delastic.apm.disable_instrumentations=spring-mvc -jar target/spring-petclinic-2.1.0.BUILD-SNAPSHOT.jar

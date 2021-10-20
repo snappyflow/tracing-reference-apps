@@ -23,9 +23,9 @@ try {
         active: sfTraceConfig['SFTRACE_SERVER_URL'] === undefined ? false : true,
         stackTraceLimit: sfTraceConfig['SFTRACE_STACK_TRACE_LIMIT'],
         captureSpanStackTraces: sfTraceConfig['SFTRACE_CAPTURE_SPAN_STACK_TRACES'],
-        logLevel: 'debug',
-        payloadLogFile: 'elasticapmagent.log'
-    })
+        // logLevel: 'debug',
+        // payloadLogFile: 'elasticapmagent.log'
+    });
 } catch (e) {
     console.log(e);
 }

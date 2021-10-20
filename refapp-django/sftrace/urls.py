@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from .views import database_views, elastic_views, elastic_unhandled_views, database_unhandled_views
+from .views import database_views, elastic_views, elastic_unhandled_views, database_unhandled_views, owner_view
 from django.conf.urls import url
 
 urlpatterns = [
@@ -23,5 +23,6 @@ urlpatterns = [
     url(r'^database/handled$', database_views.DatabaseView.as_view()),
     url(r'^elastic/handled$', elastic_views.ElasticView.as_view()),
     url(r'^database/unhandled$', database_unhandled_views.DatabaseUnhandledView.as_view()),
-    url(r'^elastic/unhandled$', elastic_unhandled_views.ElasticUnhandledView.as_view())
+    url(r'^elastic/unhandled$', elastic_unhandled_views.ElasticUnhandledView.as_view()),
+    url(r'^owner/(?P<owner_id>[\s0-9a-zA-Z_-]+)$', owner_view.OwnerView.as_view())
 ]
