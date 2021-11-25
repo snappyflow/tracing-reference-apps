@@ -232,7 +232,8 @@ try:
         'CAPTURE_SPAN_STACK_TRACES': SFTRACE_CONFIG.get('SFTRACE_CAPTURE_SPAN_STACK_TRACES'),
         'DJANGO_TRANSACTION_NAME_FROM_ROUTE': True,
         'CENTRAL_CONFIG': False,
-        'DEBUG': True
+        'DEBUG': True,
+        'METRICS_INTERVAL': '0s'
     }
 
 except Exception as error:
