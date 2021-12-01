@@ -29,5 +29,5 @@ group :production do
 end
 
 gem 'elastic-apm'
-gem ' sftrace-agent'
+gem 'sftrace-agent'
 
