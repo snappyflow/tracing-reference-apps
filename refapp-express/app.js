@@ -23,6 +23,8 @@ try {
         active: sfTraceConfig['SFTRACE_SERVER_URL'] === undefined ? false : true,
         stackTraceLimit: sfTraceConfig['SFTRACE_STACK_TRACE_LIMIT'],
         captureSpanStackTraces: sfTraceConfig['SFTRACE_CAPTURE_SPAN_STACK_TRACES'],
+        metricsInterval: '0s',
+        usePathAsTransactionName: true
         // logLevel: 'debug',
         // payloadLogFile: 'elasticapmagent.log'
     });
