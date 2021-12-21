@@ -10,6 +10,17 @@ let profileKey = process.env.SF_PROFILE_KEY;
 var sfObj = new Snappyflow();
 sfObj.init(profileKey, projectName, appName); // Manual override
 let sfTraceConfig = sfObj.getTraceConfig();
+
+// Start Trace to log feature section
+// Add below line of code to enable Trace to log feature:
+sfTraceConfig['SFTRACE_GLOBAL_LABELS'] += ',_tag_redact_body=true'
+// Option Configs for trace to log
+// Add below line to provide custom documentType (Default:"user-input"):
+sfTraceConfig['SFTRACE_GLOBAL_LABELS'] += ',_tag_documentType=<document-type>'
+// Add below line to provide destination index (Default:"log"):
+sfTraceConfig['SFTRACE_GLOBAL_LABELS'] += ',_tag_IndexType=<index-type>' // Applicable values(log, metric)
+// End trace to log section
+
 var apm;
 try {
     // let sfTraceConfig = JSON.parse(String.fromCharCode.apply(String, require('child_process').execSync("/opt/sfagent/sftrace/sftrace")))
@@ -24,7 +35,8 @@ try {
         stackTraceLimit: sfTraceConfig['SFTRACE_STACK_TRACE_LIMIT'],
         captureSpanStackTraces: sfTraceConfig['SFTRACE_CAPTURE_SPAN_STACK_TRACES'],
         metricsInterval: '0s',
-        usePathAsTransactionName: true
+        usePathAsTransactionName: true,
+        captureBody: 'all' // Required to enable trace to log feature
         // logLevel: 'debug',
         // payloadLogFile: 'elasticapmagent.log'
     });

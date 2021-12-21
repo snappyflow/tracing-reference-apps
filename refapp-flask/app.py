@@ -29,6 +29,16 @@ sf.init(profile_key, project_name, app_name)
 
 SFTRACE_CONFIG = sf.get_trace_config()
 
+# Start Trace to log feature section
+# Add below line of code to enable Trace to log feature:
+SFTRACE_CONFIG['SFTRACE_GLOBAL_LABELS'] += ',_tag_redact_body=true'
+# Option Configs for trace to log
+# Add below line to provide custom documentType (Default:"user-input"):
+SFTRACE_CONFIG['SFTRACE_GLOBAL_LABELS'] += ',_tag_documentType=<document-type>'
+# Add below line to provide destination index (Default:"log"):
+SFTRACE_CONFIG['SFTRACE_GLOBAL_LABELS'] += ',_tag_IndexType=<index-type>' # Applicable values(log, metric)
+# End trace to log section
+
 app.config['ELASTIC_APM'] = {
     'SERVICE_NAME': 'refapp-flask',
     'SERVER_URL': SFTRACE_CONFIG.get('SFTRACE_SERVER_URL'),
@@ -38,7 +48,8 @@ app.config['ELASTIC_APM'] = {
     'STACK_TRACE_LIMIT': SFTRACE_CONFIG.get('SFTRACE_STACK_TRACE_LIMIT'),
     'CAPTURE_SPAN_STACK_TRACES': SFTRACE_CONFIG.get('SFTRACE_CAPTURE_SPAN_STACK_TRACES'),
     'DEBUG': True,
-    'METRICS_INTERVAL': '0s'
+    'METRICS_INTERVAL': '0s',
+    'CAPTURE_BODY':'all' # Required for trace to log feature
 }
 
 apm = ElasticAPM(app)
