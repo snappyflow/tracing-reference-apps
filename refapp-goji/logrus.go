@@ -66,11 +66,10 @@ func (c *LogrusCtxLabels) UpdateCtxLabels(ctx context.Context) {
 }
 
 func init() {
-	fmt.Println("logrus custom init()")
-	logger.Out = NewLogrusWriter(logFilePath)
+	logger.Out = NewLogrusWriter(logrusFilePath)
 	logger.Level = logrus.DebugLevel
 	logger.SetFormatter(LogFormatter{&easy.Formatter{
-		TimestampFormat: logTimeFormat,
-		LogFormat:       logFormat,
+		TimestampFormat: logrusTimeFormat,
+		LogFormat:       logrusFormat,
 	}})
 }
