@@ -5,7 +5,6 @@ package main
 
 import (
 	"context"
-	"fmt"
 	"os"
 
 	_ "github.com/snappyflow/go-sf-apm-lib"
