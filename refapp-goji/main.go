@@ -25,6 +25,12 @@ import (
 	"go.elastic.co/apm/module/apmelasticsearch/v2"
 	"go.elastic.co/apm/module/apmsql/v2"
 	_ "go.elastic.co/apm/module/apmsql/v2/sqlite3"
+	
+	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
+
+	"go.elastic.co/apm/module/apmmongo/v2"
 )
 
 var client *http.Client
@@ -32,6 +38,17 @@ var db *sql.DB
 var elasticClient, _ = elastic.NewClient(elastic.SetHttpClient(&http.Client{
 	Transport: apmelasticsearch.WrapRoundTripper(http.DefaultTransport),
 }))
+var mongoClient, _ = mongo.Connect(
+	context.Background(),
+	options.Client().SetMonitor(apmmongo.CommandMonitor()).ApplyURI("mongodb://localhost:27017"),
+)
+
+// MongoStruct to unmarshal mongoDB data
+type MongoStruct struct {
+	Name string `json:"Name" bson:"Name,omitempty"`
+	Age  int    `json:"age" bson:"age,omitempty"`
+	City string `json:"city" bson:"city,omitempty"`
+}
 
 func main() {
 	// wrapped http client for tracing external spans
@@ -51,6 +68,7 @@ func main() {
 	goji.Get("/getregion", GetRegion)
 	goji.Get("/hello/:name", HelloHandler)
 	goji.Get("/elastic", ElasticHandler)
+	goji.Get("/mongo", MongoHandler)
 
 	// adding apmgoji middleware
 	goji.Use(goji.DefaultMux.Router)
@@ -135,4 +153,36 @@ func updateRequestCount(ctx context.Context, name string) (int, error) {
 		return -1, err
 	}
 	return count, tx.Commit()
+}
+
+// MongoHandler handles mongoDb requests
+func MongoHandler(w http.ResponseWriter, r *http.Request) {
+	collection := mongoClient.Database("mydb").Collection("persons")
+	cur, err := collection.Find(r.Context(), bson.D{})
+	if err != nil {
+		Error.Println("mongoDB find error: ", err)
+		e := apm.CaptureError(r.Context(), err)
+		e.Send()
+	}
+	var results []MongoStruct
+	for cur.Next(r.Context()) {
+		var elem MongoStruct
+		err := cur.Decode(&elem)
+		if err != nil {
+			Error.Println("mongoDB unmarshal error: ", err)
+			e := apm.CaptureError(r.Context(), err)
+			e.Send()
+		}
+		results = append(results, elem)
+	}
+	if err := cur.Err(); err != nil {
+		Error.Println("mongoDB cursor error: ", err)
+		e := apm.CaptureError(r.Context(), err)
+		e.Send()
+	}
+	cur.Close(r.Context())
+	Debug.Printf("Found multiple documents: %+v\n", results)
+	for i, result := range results {
+		Info.Printf("row %d: %s, %d, %s\n", i, result.Name, result.Age, result.City)
+	}
 }
