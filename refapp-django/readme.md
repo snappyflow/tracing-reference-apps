@@ -1,13 +1,13 @@
-## Desctription
+## Description
   
- The application contains the default sfTrace instrumentation code to enable the tracing.
+ This is the sample application contains the default sfTrace instrumentation code to enable the tracing.
  
 ## Getting Started
 
 ### Requirements
 
 1. Python 3.x
-2. Django 2.X
+2. Django 3.X
 3. pip
 
 ### Configuration
