@@ -1,6 +1,6 @@
 ## Desctription
   
- The application contains the sfTrace instrumentation code to enable the tracing.
+ The application contains the default sfTrace instrumentation code to enable the tracing.
  
 ## Getting Started
 
@@ -9,6 +9,11 @@
 1. Python 3.x
 2. Django 2.X
 3. pip
+
+### Configuration
+
+Update the profileKey, appName and projectName in the settings.py.
+
 
 ## Run
 
