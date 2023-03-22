@@ -1,0 +1,20 @@
+{{- if .Values.sfagent.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "flask-app.fullname" . }}-sfagent-config
+  labels:
+    {{ default "snappyflow/appname" .Values.global.sfappname_key }}: {{ default .Release.Name .Values.global.sfappname }}
+    {{ default "snappyflow/projectname" .Values.global.sfprojectname_key }}: {{ default .Release.Name .Values.global.sfprojectname }}
+data:
+  config.yaml: |+
+    ---
+    key: "{{ .Values.global.key }}"
+    logging:
+      plugins:
+      - name: elasticApmTraceLog
+        enabled: true
+        config:
+           log_path: /var/log/flask.log
+{{- end }}
+

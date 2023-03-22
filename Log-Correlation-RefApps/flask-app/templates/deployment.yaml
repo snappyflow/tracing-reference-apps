@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "flask-app.fullname" . }}
+  labels:
+    app.kubernetes.io/name: {{ include "flask-app.name" . }}
+    helm.sh/chart: {{ include "flask-app.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "flask-app.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "flask-app.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      initContainers:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 5000
+              protocol: TCP
+          volumeMounts:
+            - name: mat
+              mountPath: /var/log
+          env:
+          - name: SF_PROFILE_KEY
+            value: {{ .Values.global.key }}
+          - name: SF_SERVICE_NAME
+            value: test-app
+          - name: SF_PROJECT_NAME
+            value: {{ .Values.global.sfprojectname }}
+          - name: SF_APP_NAME
+            value: {{ .Values.global.sfappname }}
+          {{- if .Values.sfagent.enabled }}
+        - name: sfagent
+          image: "{{ .Values.sfagent.image.repository }}:{{ .Values.sfagent.image.tag }}"
+          imagePullPolicy: "{{ .Values.sfagent.image.pullPolicy }}"
+          command:
+            - /app/sfagent
+            - -enable-console-log
+          env:
+            - name: APP_NAME
+              value: "{{ .Values.global.sfappname }}"
+            - name: PROJECT_NAME
+              value: "{{ .Values.global.sfprojectname }}"
+          volumeMounts:
+          - name: mat
+            mountPath: /var/log
+          - name: sfagent-config
+            mountPath: /opt/sfagent/config.yaml
+            subPath: config.yaml
+          resources:
+{{ toYaml .Values.sfagent.resources | indent 12 }}
+         {{- end }}
+      volumes:
+        - name: mat
+          emptyDir: {}
+        - name: sfagent-config
+          configMap:
+            name: {{ include "flask-app.fullname" . }}-sfagent-config
+
